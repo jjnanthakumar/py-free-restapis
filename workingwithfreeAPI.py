@@ -383,6 +383,29 @@ def nandyflames(serviceurl):
     for d in data:
         print(d.text)
 
+def searchhotels(serviceurl, apikey='paste your api key here'):
+    # get it from Link: -> https://rapidapi.com/login
+    location = input("Enter Any location/hotel name : -> ")
+    querystring = {"locale": "en_US", "query": location}
+
+    headers = {
+        'x-rapidapi-host': "hotels4.p.rapidapi.com",
+        'x-rapidapi-key': apikey
+    }
+    print("Retrieving: => " + serviceurl)
+    r = requests.get(serviceurl, headers=headers, params=querystring)
+    js = json.loads(r.content.decode())
+    print("Available Hotels in " + location + ': => ')
+    for ele in js['suggestions']:
+        if ele['group'] == 'HOTEL_GROUP':
+            for hotel in ele['entities']:
+                print("Hotel Name           : -> " + hotel['name'])
+                print("Hotel Latitude       : -> " + str(hotel['latitude']))
+                print("Hotel Longitude      : -> " + str(hotel['longitude']))
+                print('-------------------------------------------------------------')
+
+    # print(json.dumps(js, indent=4))
+
 
 # agifyapi(serviceurl='https://api.agify.io/?name=')
 # genderizeapi(serviceurl='https://api.genderize.io/?name=')
@@ -405,5 +428,5 @@ def nandyflames(serviceurl):
 # covid19api('https://api.covid19api.com/live/country/')
 # covid19api('https://covid-india-cases.herokuapp.com/states')
 # nandyflames(serviceurl='https://nandy-flamesgame.herokuapp.com/')
-
+# searchhotels('https://hotels4.p.rapidapi.com/locations/search')
 print("Created by " + __author__)
