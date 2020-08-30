@@ -284,6 +284,7 @@ def clashofclansapi(serviceurl,
       "before": 100
     }
     """
+    print("-----------------------------To get Clash of Clans game data---------------------------------------"
     clantag = input("Enter Any Clan Tag: -> ")
     url = serviceurl + clantag[1:]
     print("Retreiving : => " + url)
@@ -349,6 +350,7 @@ def fetchpokemonapi(serviceurl):
 
 def covid19api(serviceurl):
     # state = input("Enter State Name : -> ")
+    print("-------------------------------------To get coivid19 cases in India--------------------------------------------"
     print("Retrieving: => " + serviceurl)
     r = requests.get(serviceurl)
     js = r.json()
@@ -362,6 +364,24 @@ def covid19api(serviceurl):
         print("Active cases             : " + str(ele['active']))
         print("Recovered cases          : " + str(ele['cured']))
         print("Death cases              : " + str(ele['deaths']))
+def nandyflames(serviceurl):
+    # This is my own website created using Django and deployed using heroku
+    # The website link is: -> https://nandy-flamesgame.herokuapp.com/
+    # In your virtual environment you must have installed this external module or use this line in your terminal " pip install bs4"
+    from bs4 import BeautifulSoup  # here i have used bs4 module to parse html data
+    name1 = input("Enter Your Name: ")
+    name2 = input("Enter Another Name: ")
+    print("Retrieving: -> https://nandy-flamesgame.herokuapp.com/")
+    post_request = requests.session()
+    post_request.get(serviceurl)
+    csrftoken = post_request.cookies['csrftoken']
+    # now the csrftoken cookie is stored in csrftoken
+    r = post_request.post(serviceurl, data={'n1': name1, 'n2': name2, 'csrfmiddlewaretoken': csrftoken},
+                          headers=dict(Referer=serviceurl))
+    soup = BeautifulSoup(r.content.decode(), 'html.parser')
+    data = soup('h2')
+    for d in data:
+        print(d.text)
 
 
 # agifyapi(serviceurl='https://api.agify.io/?name=')
@@ -381,10 +401,9 @@ def covid19api(serviceurl):
 # print(get_domains().content.decode())
 # faceplusapi(serviceurl='https://api-us.faceplusplus.com/facepp/v3/detect')
 # clashofclansapi('https://api.clashofclans.com/v1/clans/%23')
-
-
 # fetchpokemonapi('https://pokeapi.co/api/v2/pokemon')
 # covid19api('https://api.covid19api.com/live/country/')
 # covid19api('https://covid-india-cases.herokuapp.com/states')
+# nandyflames(serviceurl='https://nandy-flamesgame.herokuapp.com/')
 
 print("Created by " + __author__)
