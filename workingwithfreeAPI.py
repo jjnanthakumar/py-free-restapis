@@ -174,7 +174,7 @@ def openweathermap(serviceurl, api_key='paste your api keys or u can give ur key
     print("Sunset   :     {:>25}".format(str(datetime.datetime.fromtimestamp(js['sys']['sunset']))))
 
 
-def omdbapi(serviceurl, api_key='f2faaef3'):
+def omdbapi(serviceurl, api_key='paste your api key here'):
     print('----------------------------To get movies related data from web-------------------------------')
     type = input("Enter type whether movie, series or episode : -> ")
     title = input(
@@ -182,16 +182,19 @@ def omdbapi(serviceurl, api_key='f2faaef3'):
     payload = {'apikey': api_key, 'type': type, 't': title}
     url = serviceurl + urllib.parse.urlencode(payload)
     print("Retrieving: -> " + url)
-    d = urllib.request.urlopen(url).read().decode()
-    js = json.loads(d)
+    try:
+        d = urllib.request.urlopen(url).read().decode()
+        js = json.loads(d)
 
-    print(title.capitalize() + ' ' + type.capitalize() + " Poster URL  : -> " + str(js['Poster']))
-    print(title.capitalize() + ' ' + type.capitalize() + " Released on : -> " + str(js['Released']))
-    print(title.capitalize() + ' ' + type.capitalize() + " Runtime     : -> " + str(js['Runtime']))
-    print(title.capitalize() + ' ' + type.capitalize() + " Director    : -> " + str(js['Director']))
-    print(title.capitalize() + ' ' + type.capitalize() + " Writer      : -> " + str(js['Writer']))
-    print(title.capitalize() + ' ' + type.capitalize() + " Actors      : -> " + str(js['Actors']))
-    print(title.capitalize() + ' ' + type.capitalize() + " Description : -> " + str(js['Plot']))
+        print(title.capitalize() + ' ' + type.capitalize() + " Poster URL  : -> " + str(js['Poster']))
+        print(title.capitalize() + ' ' + type.capitalize() + " Released on : -> " + str(js['Released']))
+        print(title.capitalize() + ' ' + type.capitalize() + " Runtime     : -> " + str(js['Runtime']))
+        print(title.capitalize() + ' ' + type.capitalize() + " Director    : -> " + str(js['Director']))
+        print(title.capitalize() + ' ' + type.capitalize() + " Writer      : -> " + str(js['Writer']))
+        print(title.capitalize() + ' ' + type.capitalize() + " Actors      : -> " + str(js['Actors']))
+        print(title.capitalize() + ' ' + type.capitalize() + " Description : -> " + str(js['Plot']))
+    except:
+        print("No data Found! please provide a valid movie/series/episode name..")
 
 
 def meetupapi(serviceurl):
