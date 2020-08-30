@@ -52,23 +52,30 @@ def geoipapi(serviceurl):
 def itunessearchapi(serviceurl):
     # have fun with ITUNES API
     print('-----------------------------To get songs URL etc..------------------------------------')
-    print("Retrieving: => " + serviceurl)
     address = input("Enter Author name: -> ")
     songs_limit = input("Enter songs Limits: -> ")  # if needed u can give limits but sometimes ir results in a error
     serviceurl = serviceurl + urllib.parse.urlencode({'term': address, 'limit': songs_limit})
-    print(serviceurl)
-    data = urllib.request.urlretrieve(serviceurl, '/users/drda/projects/sample/songs.json')
-    with open('songs.json', 'r') as f:
-        datas = f.read()
-        js = json.loads(datas)
-        js = js['results']
-        for ele in js:
-            if ele['primaryGenreName'] == 'Tamil' or ele['primaryGenreName'] == 'tamil':
-                print('Go to this url: -> ' + ele['trackViewUrl'])
-                print('Preview URL only 30 seconds sample audio: -> ' + ele['previewUrl'])
-                print("Collection Name: -> " + ele['collectionCensoredName'])
-                print("Collection Release date: -> " + ele['releaseDate'].split('T')[0])
-                print("Track Name: -> " + ele['trackCensoredName'])
+    print("Retrieving: => " + serviceurl)
+    try:
+        urllib.request.urlretrieve(serviceurl, '/users/drda/projects/sample/songs.json')
+        with open('songs.json', 'r') as f:
+            datas = f.read()
+            js = json.loads(datas)
+            c = 0
+            for ele in js['results']:
+                if ele['primaryGenreName'] == 'Tamil' or ele['primaryGenreName'] == 'tamil':
+                    c += 1
+                    print("--------------------------------------------Song " + str(c) + '---------------------------------------------------------')
+                    print('Go to this url: -> ' + ele['trackViewUrl'])
+                    print('Preview URL only 30 seconds sample audio: -> ' + ele['previewUrl'])
+                    print("Collection Name: -> " + ele['collectionCensoredName'])
+                    print("Collection Release date: -> " + ele['releaseDate'].split('T')[0])
+                    print("Track Name: -> " + ele['trackCensoredName'])
+    except KeyError:
+        print("Sorry requested Author/limit not found!")
+    except:
+        print("No songs found!")
+
 
 
 def jokeapi(serviceurl):
