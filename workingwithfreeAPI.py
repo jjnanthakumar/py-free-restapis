@@ -406,6 +406,24 @@ def searchhotels(serviceurl, apikey='paste your api key here'):
 
     # print(json.dumps(js, indent=4))
 
+def shortenurl(serviceurl, apikey='paste your api key here'):
+    # get it from Link: -> https://rapidapi.com/login
+    url = input("Enter any URL to be shortened : -> ")
+    payload = {'url': url}
+    headers = {
+        'x-rapidapi-host': "url-shortener-service.p.rapidapi.com",
+        'x-rapidapi-key': apikey,
+        'content-type': "application/x-www-form-urlencoded"
+    }
+    print("Retreiving: => " + serviceurl)
+    response = requests.post(serviceurl, data=payload, headers=headers)
+
+    js = json.loads(response.content.decode())
+    try:
+        print("Your Shorten URL for " + payload['url'] + ' is : => ' + js['result_url'])
+    except KeyError:
+        print("Please provide a valid URL! ")
+
 
 # agifyapi(serviceurl='https://api.agify.io/?name=')
 # genderizeapi(serviceurl='https://api.genderize.io/?name=')
@@ -429,4 +447,5 @@ def searchhotels(serviceurl, apikey='paste your api key here'):
 # covid19api('https://covid-india-cases.herokuapp.com/states')
 # nandyflames(serviceurl='https://nandy-flamesgame.herokuapp.com/')
 # searchhotels('https://hotels4.p.rapidapi.com/locations/search')
+# shortenurl('https://url-shortener-service.p.rapidapi.com/shorten')
 print("Created by " + __author__)
