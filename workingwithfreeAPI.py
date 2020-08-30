@@ -175,6 +175,7 @@ def openweathermap(serviceurl, api_key='paste your api keys or u can give ur key
 
 
 def omdbapi(serviceurl, api_key='paste your api key here'):
+    # Get api keys from -> http://www.omdbapi.com/apikey.aspx
     print('----------------------------To get movies related data from web-------------------------------')
     type = input("Enter type whether movie, series or episode : -> ")
     title = input(
