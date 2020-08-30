@@ -1,7 +1,7 @@
 import urllib.request, urllib.error, urllib.parse
 import json
 
-import requests
+import requests # this is also an external module u must install using pip command "pip install requests" in your terminal
 
 '''Created by Nanthakumar J J U can use this code and modify but dont forgot to give credits to me
 My website: http://jjnanthakumar.github.io/
