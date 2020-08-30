@@ -213,7 +213,8 @@ def meetupapi(serviceurl):
     print("Totally " + str(count) + ' meetings happening in topic of ' + topic_name)
 
 
-def calendarapi(serviceurl, apikey='f96fcb013f4367955723f5a5fbe3e990e2055299'):
+def calendarapi(serviceurl, apikey='paste your api key here'):
+    # get api key from : -> https://calendarific.com/signup
     ''' Even more u can do with these apis u can get type as input from user and add it to payload dictionary'''
     print('-------------------------Here u can get public holidays date--------------------------')
     year = int(input("Enter Year : ->  "))
