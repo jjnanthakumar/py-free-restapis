@@ -436,6 +436,31 @@ def shortenurl(serviceurl, apikey='paste your api key here'):
     except KeyError:
         print("Please provide a valid URL! ")
 
+def wordnikapi(serviceurl, apikey='paste your apikey here'):
+    # get api key from here: https://developer.wordnik.com/#wordnikUsername  ( it takes 1 week to get your api key) - be patient
+    word = input("Enter any Word : -> ")
+    url = serviceurl + word + '/' + 'definitions' + '?'
+    print("Retrieving : => " + url)
+    r = requests.get(url, params={'api_key': apikey, 'word': word})
+    data = r.content.decode()
+    d_lst = json.loads(data)
+    c = 0
+    if type(d_lst) != list and d_lst.get('statusCode') == 404:
+        raise NameError("Sorry Given word doesn't have meaning!")
+    for ele in d_lst:
+        if ele['sourceDictionary'] == 'ahd-5':
+            if ele.get('text') is not None and '<' not in ele.get('text'):
+                c += 1
+                print("Meaning " + str(c) + ': -> ' + ele.get('text'))
+    url1 = serviceurl + word + '/' + 'topExample' + '?'
+    print("Retrieving : => " + url1)
+    r1 = requests.get(url1, params={'api_key': apikey, 'word': word})
+    data1 = r1.content.decode()
+    js = json.loads(data1)
+    print("Example URL : -> " + js['url'])
+    print("------------------------------------------------Example Title : " + js['title'] + '-----------------------------------------------------')
+    print(js['text'])
+
 
 # agifyapi(serviceurl='https://api.agify.io/?name=')
 # genderizeapi(serviceurl='https://api.genderize.io/?name=')
@@ -460,4 +485,5 @@ def shortenurl(serviceurl, apikey='paste your api key here'):
 # nandyflames(serviceurl='https://nandy-flamesgame.herokuapp.com/')
 # searchhotels('https://hotels4.p.rapidapi.com/locations/search')
 # shortenurl('https://url-shortener-service.p.rapidapi.com/shorten')
+# wordnikapi('http://api.wordnik.com/v4/word.json/')
 print("Created by " + __author__)
