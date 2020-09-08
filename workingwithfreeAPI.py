@@ -461,6 +461,29 @@ def wordnikapi(serviceurl, apikey='paste your apikey here'):
     print("------------------------------------------------Example Title : " + js['title'] + '-----------------------------------------------------')
     print(js['text'])
 
+def codewarapi(serviceurl, apikey='paste your api key here'):
+    # apikey can be found in code war account settings : https://www.codewars.com/users/edit
+    name = input("Enter Codewar Username or ID : -> ")
+    url = serviceurl + name
+    print("Retrieving : => " + url)
+    headers = {'Authorization': apikey}
+    response = requests.get(url, headers=headers)
+    js = json.loads(response.content.decode())
+    if 'success' in js.keys():
+        raise ValueError("Requested user data not found!")
+    try:
+        print(
+            "-------------------------------------" + name + ' Details' + '----------------------------------------------')
+        print("Username                   : " + str(js['username']))
+        print("Name                       : " + str(js['name']))
+        print("Total Honor                : " + str(js['honor']))
+        print("College/School Name        : " + str(js['clan']))
+        print("Overall Rank Position      : " + str(js['leaderboardPosition']))
+        print("Skills                     : " + str(', '.join(js['skills'])))
+        print("Total Challenges Completed : " + str(js['codeChallenges']['totalCompleted']))
+    except:
+        print("Not found!")
+
 
 # agifyapi(serviceurl='https://api.agify.io/?name=')
 # genderizeapi(serviceurl='https://api.genderize.io/?name=')
@@ -486,4 +509,5 @@ def wordnikapi(serviceurl, apikey='paste your apikey here'):
 # searchhotels('https://hotels4.p.rapidapi.com/locations/search')
 # shortenurl('https://url-shortener-service.p.rapidapi.com/shorten')
 # wordnikapi('http://api.wordnik.com/v4/word.json/')
+# codewarapi('https://www.codewars.com/api/v1/users/')
 print("Created by " + __author__)
