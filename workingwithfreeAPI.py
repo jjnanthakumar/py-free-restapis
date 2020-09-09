@@ -484,7 +484,18 @@ def codewarapi(serviceurl, apikey='paste your api key here'):
     except:
         print("Not found!")
 
-
+def translateapi(serviceurl, apikey='paste your apikey here'):
+    # get it from Link: -> https://rapidapi.com/login
+    text = input("Enter Text: -> ")
+    t_from = input("Enter Language code From : -> ")  # Here You can get all kinds of Language Codes: https://www.andiamo.co.uk/resources/iso-language-codes/
+    t_to = input("Enter Language code to be converted: -> ")
+    print("Retieving : => " + serviceurl)
+    querystring = {"text": text, "lang_from": t_from, "lang_to": t_to}
+    response = requests.get(serviceurl, headers={'x-rapidapi-host': "just-translated.p.rapidapi.com",
+                                                 'x-rapidapi-key': apikey}, params=querystring)
+    js = json.loads(response.text)
+    print("Your Translated Text are: " + js['text'][0] if js['code'] == 200 else 'Oops Sorry No data found!')
+    # print(response.text)
 # agifyapi(serviceurl='https://api.agify.io/?name=')
 # genderizeapi(serviceurl='https://api.genderize.io/?name=')
 # ipifyapi(serviceurl='https://api.ipify.org?format=json')  # for ipv4
@@ -510,4 +521,5 @@ def codewarapi(serviceurl, apikey='paste your api key here'):
 # shortenurl('https://url-shortener-service.p.rapidapi.com/shorten')
 # wordnikapi('http://api.wordnik.com/v4/word.json/')
 # codewarapi('https://www.codewars.com/api/v1/users/')
+# translateapi('https://just-translated.p.rapidapi.com/')
 print("Created by " + __author__)
