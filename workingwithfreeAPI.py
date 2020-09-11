@@ -434,7 +434,7 @@ def shortenurl(serviceurl, apikey='paste your api key here'):
     try:
         print("Your Shorten URL for " + payload['url'] + ' is : => ' + js['result_url'])
     except KeyError:
-        print("Please provide a valid URL! ")
+        print(js['message'])
 
 def wordnikapi(serviceurl, apikey='paste your apikey here'):
     # get api key from here: https://developer.wordnik.com/#wordnikUsername  ( it takes 1 week to get your api key) - be patient
